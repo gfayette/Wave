@@ -5,8 +5,10 @@
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
+#include "file.h"
 
 typedef struct wav_file {
+
     // RIFF header chunk
     char chunk_id[4];
     int chunk_size;
@@ -27,7 +29,7 @@ typedef struct wav_file {
     int data_size;
 
     // data pointer
-    char *data_pointer;
+    char* data_pointer;
 
     // useful file metrics
     int file_size;
@@ -36,18 +38,25 @@ typedef struct wav_file {
     int audio_data_position;
     int data_end_position;
     int bytes_after_data;
-    int sample_size_in_bytes;
-    int num_samples;
+    int all_channel_sample_size_in_bytes;
+    int num_all_channel_samples;
+
 } wav_file;
 
-int find_substring_position(char *contents, int search_length, char *search_string, int search_string_length);
+char* read_wav_file(char* file_name);
 
 void print_stats(wav_file* wav, char* filename);
 
-wav_file *parse(char *contents);
+wav_file* parse(char* contents);
 
-void reverse_data(char *source, int num_samples, int sample_size);
+void remove_metadata(char** file_in, wav_file** wav_pointer);
 
-void stretch_data(char *source, char *destination, int num_samples, int sample_size, double time_multiplier);
+void push_back_file(char** file_in, wav_file** wav_pointer, char* embedded_filename);
+
+void pop_font_file(char** file_in, wav_file** wav_pointer, char* extracted_file_name);
+
+void stretch_audio(char** file_in, wav_file** wav_pointer, double time_multiplier);
+
+void reverse_audio(char* source, int num_samples, int sample_size);
 
 #endif
