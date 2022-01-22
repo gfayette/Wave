@@ -1,6 +1,6 @@
 #include "wav.h"
 
-// A function for locating the position of a sequence of chars within within a char array.
+// A function for locating the position of a sequence of chars within a char array.
 // Returns -1 if the subsequence cannot be found.
 int find_subsequence_position(char* contents, int search_length, char* search_string, int search_string_length) {
     for (int i = 0; i < search_length - search_string_length; ++i) {
